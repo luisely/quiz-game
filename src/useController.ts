@@ -1,13 +1,12 @@
-import { useCallback, useState } from "react";
-import { questionsObj, TypeQuestions } from "./questions";
+import { useCallback, useState } from 'react'
+import { questionsObj, TypeQuestions } from './questions'
 
 export function useController() {
-
   const [life, setLife] = useState(3)
   const [errors, setErrors] = useState(0)
   const [points, setPoints] = useState(0)
   const [gameOver, setGameOver] = useState(false)
-  const [questions, setQuestions] = useState(questionsObj);
+  const [questions, setQuestions] = useState(questionsObj)
   const [optionSelected, setOptionSelected] = useState<string | null>()
   const [questionActive, setQuestionActive] = useState(() => {
     return Math.floor(Math.random() * questions.length)
@@ -18,24 +17,26 @@ export function useController() {
   }
 
   const handleOption = useCallback(() => {
-    if(questions.length === 0) {
+    if (questions.length === 0) {
       setGameOver(true)
     } else {
-      const correctAnswer = questions[questionActive].answer;
+      const correctAnswer = questions[questionActive].answer
 
-      if(optionSelected === correctAnswer){
+      if (optionSelected === correctAnswer) {
         setPoints((state) => state + 1)
       } else {
         setErrors((state) => state + 1)
         lossLife()
       }
-  
+
       const updatedQuestions = [...questions]
       updatedQuestions[questionActive].hasBeenUsed = true
-      const removedUsedQuestion = updatedQuestions.filter(question => !question.hasBeenUsed)
+      const removedUsedQuestion = updatedQuestions.filter(
+        (question) => !question.hasBeenUsed,
+      )
       setQuestions(removedUsedQuestion)
 
-      if(removedUsedQuestion.length < 1) {
+      if (removedUsedQuestion.length < 1) {
         setGameOver(true)
       } else {
         setNextQuestion(removedUsedQuestion)
@@ -45,7 +46,7 @@ export function useController() {
   }, [optionSelected, questionActive, questions])
 
   const setNextQuestion = (updatedQuestions: TypeQuestions[]) => {
-    const findNextQuestion = Math.floor(Math.random() * updatedQuestions.length);    
+    const findNextQuestion = Math.floor(Math.random() * updatedQuestions.length)
     setQuestionActive(findNextQuestion)
   }
 
@@ -58,7 +59,6 @@ export function useController() {
     questionActive,
     optionSelected,
     questions,
-    setOptionSelected
-    
+    setOptionSelected,
   }
 }

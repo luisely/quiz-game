@@ -1,16 +1,25 @@
-import { useEffect } from 'react';
-import { Question } from './question';
-import { useController } from './useController';
+import { useEffect } from 'react'
+import { Question } from './question'
+import { useController } from './useController'
 
 function App() {
-
-  const { handleOption, life, gameOver, points, errors, optionSelected, questionActive, questions, setOptionSelected} = useController()
+  const {
+    handleOption,
+    life,
+    gameOver,
+    points,
+    errors,
+    optionSelected,
+    questionActive,
+    questions,
+    setOptionSelected,
+  } = useController()
 
   useEffect(() => {
     if (optionSelected) {
-      handleOption();
+      handleOption()
     }
-  }, [optionSelected, handleOption]);
+  }, [optionSelected, handleOption])
 
   return (
     <div className="flex justify-center w-full bg-[url(../pics/fundo_wall2.jpg)] h-screen bg-repeat-round bg-cover">
