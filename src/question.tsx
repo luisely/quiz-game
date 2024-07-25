@@ -97,7 +97,7 @@ export function Question( { currentQuestion, gameOver, questionsObj, setOptionSe
                 value={index} 
                 onClick={handleClick}
               >
-                <li className="list-none bg-no-repeat bg-[url('../pics/lista.webp')] bg-left pl-10">{option}</li>
+                <li className="list-none bg-no-repeat bg-[url('../pics/lista.webp')] bg-left pl-10">{`${option} >`}</li>
               </button>
             ))}
 
