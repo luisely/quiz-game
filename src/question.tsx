@@ -147,11 +147,8 @@ export function Question({
     })
   }
 
-  async function handleAtualizar() {
-    await queryClient.invalidateQueries({
-      queryKey: ['score'],
-    })
-
+  function handleAtualizar() {
+    refetch()
     setButtonDisabled(true) // Desativa o botão
 
     setTimeout(() => setButtonDisabled(false), 60 * 1000)
