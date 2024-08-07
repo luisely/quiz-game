@@ -180,9 +180,9 @@ export function Question({
                 pontuação
               </h1>
             </div>
-            <div className="flex flex-col justify-center w-full h-full font-serif">
+            <div className="flex flex-col justify-center w-full h-full font-serif ">
               <div className=" mb-6">
-                <span className="text-[#F1FF75] text-3xl md:text-5xl shadow-lg">
+                <span className="text-yellow-600 text-3xl md:text-6xl shadow-lg">
                   {generateFinalScoreMemo}
                 </span>
               </div>
@@ -220,8 +220,17 @@ export function Question({
               </h1>
             </div>
             <div className="flex flex-col justify-between text-xl w-full h-full font-serif row-span-2 text-[#BAB0A3]">
-              <div className="space-y-2 mr-8">
+              <div className="space-y-1 mr-8">
                 {isScorePending && <span></span>}
+                <div className="grid grid-cols-3 grid-rows-[1/5_2/5_2/5] text-start text-yellow-100">
+                  <div className="text-sm md:text-lg text-end px-6">#</div>
+                  <div className="text-sm md:text-lg">Nome</div>
+                  <div className="text-sm md:text-lg text-end">Pts</div>
+                </div>
+                <div className="flex justify-end">
+                  <hr className="w-[80%] flex items-center opacity-10 justify-end" />
+                </div>
+
                 {data?.gameScore.map((score, index) => (
                   <div
                     key={score.id}
