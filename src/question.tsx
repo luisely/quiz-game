@@ -3,7 +3,7 @@ import Timer from './Timer'
 import dayjs from 'dayjs'
 import click from './assets/click.mp3'
 import { IScore, useScore } from './hooks/useScore'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 interface QuestionProps {
   currentQuestion: number
@@ -33,8 +33,11 @@ export function Question({
   const [endTime, setEndTime] = useState('')
   const [active, setActive] = useState(false)
   const [playerName, setPlayerName] = useState('')
+  const [isButtonDisabled, setButtonDisabled] = useState(false)
 
-  const { data, refetch, isPending: isScorePending } = useScore()
+  const { data, refetch, isFetching, isPending: isScorePending } = useScore()
+
+  const queryClient = useQueryClient()
 
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
     const date = new Date().toISOString()
@@ -144,6 +147,16 @@ export function Question({
     })
   }
 
+  async function handleAtualizar() {
+    await queryClient.invalidateQueries({
+      queryKey: ['score'],
+    })
+
+    setButtonDisabled(true) // Desativa o botão
+
+    setTimeout(() => setButtonDisabled(false), 60 * 1000)
+  }
+
   return (
     <>
       <div className="flex flex-col justify-center items-center h-[97%] w-full">
@@ -163,17 +176,21 @@ export function Question({
         {gameOver && (
           <div className="grid grid-cols-2 grid-rows-[1fr_4fr_1fr] grid-flow-col h-full w-full p-2">
             <div className="flex flex-col text-xl w-full h-full">
-              <h1 className="text-4xl md:text-6xl mb-4 font-semibold text-slate-100 font-serif-giz">
+              <h1 className="text-3xl md:text-6xl mb-4 font-semibold text-slate-100 font-serif-giz">
                 pontuação
               </h1>
             </div>
-            <div className="flex flex-col text-3xl w-full h-full font-serif">
-              <span>Seu tempo: {diffTime()} sec</span>
-              <span>Acertos: {points}</span>
-              <span>Erros: {errors}</span>
-              <span className="text-[#F1FF75] text-4xl md:text-5xl mt-28">
-                Total: {generateFinalScoreMemo}
-              </span>
+            <div className="flex flex-col justify-center w-full h-full font-serif">
+              <div className=" mb-6">
+                <span className="text-[#F1FF75] text-3xl md:text-5xl shadow-lg">
+                  {generateFinalScoreMemo}
+                </span>
+              </div>
+              <div className="flex flex-col md:text-xl">
+                <span>Tempo: {diffTime()} sec</span>
+                <span>Acertos: {points}</span>
+                <span>Erros: {errors}</span>
+              </div>
             </div>
             <div className="w-full flex flex-col">
               <form onSubmit={handleSubmit}>
@@ -185,24 +202,24 @@ export function Question({
                   value={playerName}
                   disabled={isSuccess}
                   onChange={(e) => setPlayerName(e.currentTarget.value)}
-                  className="bg-transparent placeholder-shown:text-center placeholder:opacity-40 rounded w-60 border border-stone-600 text-base text-center h-10 outline-none"
-                  placeholder="Deixe seu nome no placar!"
+                  className="bg-transparent placeholder-shown:text-center max-w-[70%] placeholder:opacity-40 rounded w-60 border border-stone-600 text-base text-center h-10 outline-none"
+                  placeholder="Grave seu nome!"
                 />
                 <button
                   disabled={isSuccess}
                   type="submit"
-                  className="h-10 outline-none bg-stone-800/35 w-60 rounded hover:bg-[#B69E7A]/15 mt-2 font-serif text-xl text-stone-300 disabled:pointer-events-none"
+                  className="h-10 outline-none bg-stone-800/35 w-60 rounded max-w-[70%] hover:bg-[#B69E7A]/15 mt-2 font-serif text-lg text-stone-300 disabled:pointer-events-none"
                 >
                   Enviar
                 </button>
               </form>
             </div>
             <div>
-              <h1 className="text-4xl md:text-6xl mb-4 text-slate-100 font-semibold font-serif-giz">
+              <h1 className="text-3xl md:text-6xl mb-4 text-slate-100 font-semibold font-serif-giz">
                 top 10
               </h1>
             </div>
-            <div className="flex flex-col text-xl w-full h-full font-serif row-span-2">
+            <div className="flex flex-col justify-between text-xl w-full h-full font-serif row-span-2 text-[#BAB0A3]">
               <div className="space-y-2 mr-8">
                 {isScorePending && <span></span>}
                 {data?.gameScore.map((score, index) => (
@@ -210,18 +227,29 @@ export function Question({
                     key={score.id}
                     className="grid grid-cols-3 grid-rows-[1/5_2/5_2/5] text-start"
                   >
-                    <div className="text-xl text-end px-6">
+                    <div className="text-sm md:text-xl text-end px-6">
                       <span>{index + 1}</span>
                     </div>
                     <div
                       data-index={index === 0}
-                      className="text-xl data-[index=true]:text-[#F1FF75] data-[index=true]:font-bold"
+                      className="text-sm md:text-xl"
                     >
                       {score.playerName}
                     </div>
-                    <div className="text-xl">{score.score}</div>
+                    <div className="text-sm md:text-xl text-end">
+                      {score.score}
+                    </div>
                   </div>
                 ))}
+              </div>
+              <div>
+                <button
+                  disabled={isButtonDisabled || isFetching}
+                  onClick={handleAtualizar}
+                  className="h-10 outline-none bg-stone-800/35 w-60 rounded max-w-[70%] hover:bg-[#B69E7A]/15 font-serif text-lg text-stone-300 disabled:pointer-events-none disabled:text-opacity-5"
+                >
+                  {isButtonDisabled || isFetching ? '...' : 'Atualizar'}
+                </button>
               </div>
             </div>
           </div>
