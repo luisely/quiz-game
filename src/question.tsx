@@ -37,8 +37,6 @@ export function Question({
 
   const { data, refetch, isFetching, isPending: isScorePending } = useScore()
 
-  const queryClient = useQueryClient()
-
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
     const date = new Date().toISOString()
 
