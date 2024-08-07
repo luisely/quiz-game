@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 :root {
-  font-family: "PT Serif", sans-serif;
   color: #fff;
 
   font-synthesis: none;
