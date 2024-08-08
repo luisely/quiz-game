@@ -3,7 +3,7 @@ import Timer from './Timer'
 import dayjs from 'dayjs'
 import click from './assets/click.mp3'
 import { IScore, useScore } from './hooks/useScore'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 
 interface QuestionProps {
   currentQuestion: number
