@@ -1,4 +1,8 @@
-export const answers = [
+/* cSpell:disable */
+
+import _ from 'lodash'
+
+export const questions = [
   [
     'Qual país que fala holandês?',
     'Alemanha',
@@ -293,16 +297,18 @@ export const answers = [
   ],
 ]
 
+const shuffledQuestions = _.shuffle(questions)
+
 export interface TypeQuestions {
   question: string
   options: Array<string | number>
   answer: string
-  hasBeenUsed: boolean
 }
 
-export const questionsObj = answers.map((item) => ({
-  question: item[0].toString(),
-  options: item.slice(1, -1),
-  answer: (Number(item[5]) - 1).toString(),
-  hasBeenUsed: false,
-}))
+export const quizQuestions = shuffledQuestions
+  .map((item) => ({
+    question: item[0].toString(),
+    options: item.slice(1, -1),
+    answer: (Number(item[5]) - 1).toString(),
+  }))
+  .slice(0, 20)

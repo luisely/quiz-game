@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 
 export interface IScore {
-  gameScore: {
+  gamesScore: {
     id: string
     playerName: string
     score: number
@@ -9,6 +9,8 @@ export interface IScore {
     date: string
     time: number
     pk: string
+    acertos: number
+    erros: number
   }[]
 }
 
@@ -23,8 +25,6 @@ export function useScore() {
       const res = await fetch(
         'https://uizr4o9b8f.execute-api.us-east-1.amazonaws.com/score/game_001-2024',
       )
-
-      console.log(res)
 
       if (!res.ok) {
         throw new Error('Erro ao carregar tabela')
