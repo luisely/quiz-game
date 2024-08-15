@@ -47,7 +47,7 @@ export function GlobalScore() {
                   title={`${score.acertos.toString()}/${score.erros.toString()}`}
                   className="no-underline"
                 >
-                  {score.UserId}
+                  {score.UserId.split('#')[0]}
                 </abbr>
               </div>
               <div className="text-base md:text-xl text-end">
