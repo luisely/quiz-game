@@ -2,13 +2,10 @@ import { useQuery } from '@tanstack/react-query'
 
 export interface IScore {
   gamesScore: {
-    id: string
-    playerName: string
-    score: number
-    sk: string
+    UserId: string
+    Score: number
     date: string
     time: number
-    pk: string
     acertos: number
     erros: number
   }[]

@@ -36,7 +36,7 @@ export function GlobalScore() {
 
           {data?.gamesScore.map((score, index) => (
             <div
-              key={score.id}
+              key={score.UserId}
               className="grid grid-cols-[0.5fr_3fr_1fr] text-start"
             >
               <div className="text-base md:text-xl px-3">
@@ -47,11 +47,11 @@ export function GlobalScore() {
                   title={`${score.acertos.toString()}/${score.erros.toString()}`}
                   className="no-underline"
                 >
-                  {score.playerName}
+                  {score.UserId}
                 </abbr>
               </div>
               <div className="text-base md:text-xl text-end">
-                {score.score.toFixed(2)}
+                {score.Score.toFixed(2)}
               </div>
             </div>
           ))}

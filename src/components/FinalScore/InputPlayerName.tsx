@@ -17,7 +17,7 @@ export default function InputPlayerName() {
 
   const { mutate, isSuccess } = useMutation({
     mutationFn: async ({
-      pk,
+      gameWeekId,
       score,
       acertos,
       erros,
@@ -25,7 +25,7 @@ export default function InputPlayerName() {
       date,
       time,
     }: {
-      pk: string
+      gameWeekId: string
       score: number
       acertos: number
       erros: number
@@ -34,12 +34,12 @@ export default function InputPlayerName() {
       time: number
     }): Promise<IScore> => {
       const res = await fetch(
-        'https://uizr4o9b8f.execute-api.us-east-1.amazonaws.com/register',
+        'https://uizr4o9b8f.execute-api.us-east-1.amazonaws.com/register-score',
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            pk,
+            gameWeekId,
             score: Number(score),
             acertos,
             erros,
@@ -86,7 +86,7 @@ export default function InputPlayerName() {
     }
 
     mutate({
-      pk: 'game_001-2024',
+      gameWeekId: 'game_001-2024',
       score: Number(userFinalScore),
       acertos: points,
       erros: errors,
