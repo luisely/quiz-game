@@ -1,7 +1,8 @@
 import { useMutation } from '@tanstack/react-query'
 import { FormEvent, useState } from 'react'
-import { IScore, useScore } from '../../hooks/useScore'
-import { useStore } from '../../store'
+import { IScore, useScore } from '@/app/hooks/useScore'
+import { useStore } from '@/store/useStore'
+import { useToast } from '@/components/ui/use-toast'
 
 export default function InputPlayerName() {
   const [playerName, setPlayerName] = useState('')
@@ -12,6 +13,7 @@ export default function InputPlayerName() {
   const userFinalScore = useStore((state) => state.userFinalScore)
 
   const { refetch } = useScore()
+  const { toast } = useToast()
 
   const { mutate, isSuccess } = useMutation({
     mutationFn: async ({
@@ -51,7 +53,11 @@ export default function InputPlayerName() {
       return res.json()
     },
     onError: (error) => {
-      console.log('Erro ao carregar o score', error.toString())
+      toast({
+        variant: 'default',
+        title: 'Opa!',
+        description: error.message,
+      })
     },
     onSuccess: () => {
       refetch()
@@ -60,6 +66,24 @@ export default function InputPlayerName() {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+
+    if (playerName.length < 3 || playerName.length > 8) {
+      toast({
+        variant: 'default',
+        title: 'Opa!',
+        description: 'Nome precisa ter mínimo de 3 e máximo de 8 caracteres.',
+      })
+      return
+    }
+
+    if (timePassed === 0) {
+      toast({
+        variant: 'default',
+        title: 'Opa! - Malandrinho',
+        description: 'Você nem jogou, joga aí !!',
+      })
+      return
+    }
 
     mutate({
       pk: 'game_001-2024',

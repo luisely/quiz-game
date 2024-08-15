@@ -1,12 +1,13 @@
 import { useEffect } from 'react'
 
-import { useScore } from './hooks/useScore'
-import { Bar } from './components/Bar'
-import { QuestionBoard } from './components/QuestionBoard'
-import { FinalScore } from './components/FinalScore'
 import { useShallow } from 'zustand/react/shallow'
-import { useStore } from './store'
+import { useScore } from './app/hooks/useScore'
+import { Bar } from './components/Bar'
+import { FinalScore } from './components/FinalScore'
+import { QuestionBoard } from './components/QuestionBoard'
+import { useToast } from './components/ui/use-toast'
 import { quizQuestions } from './store/questions'
+import { useStore } from './store/useStore'
 
 export function BoardGame() {
   const { gameOver, currentQuestion } = useStore(
@@ -17,12 +18,13 @@ export function BoardGame() {
   )
 
   const { refetch } = useScore()
+  const { toast } = useToast()
 
   useEffect(() => {
     if (gameOver) {
       refetch()
     }
-  }, [gameOver, refetch])
+  }, [gameOver, refetch, toast])
 
   return (
     <>

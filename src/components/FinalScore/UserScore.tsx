@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react'
-import { useStore } from '../../store'
-import { generateFinalScore } from './utils/generateFinalScore'
+import { useStore } from '../../store/useStore'
+import { generateFinalScore } from '../../app/utils/generateFinalScore'
 
 export function UserScore() {
   const points = useStore((state) => state.points)
@@ -30,7 +30,7 @@ export function UserScore() {
             {generateFinalScoreMemo || ''}
           </span>
         </div>
-        <div className="flex flex-col md:text-xl">
+        <div className="flex flex-col md:text-xl text-stone-200">
           <span>Tempo: {timePassed || 0} sec</span>
           <span>Acertos: {points}</span>
           <span>Erros: {errors}</span>

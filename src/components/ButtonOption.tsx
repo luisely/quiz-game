@@ -1,4 +1,4 @@
-import { useHandleOptionSelected } from '../hooks/useHandleOptionSelected'
+import { useHandleOptionSelected } from '../app/hooks/useHandleOptionSelected'
 
 interface IButton extends React.ComponentProps<'button'> {
   children: React.ReactNode

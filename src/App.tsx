@@ -1,5 +1,6 @@
 import { BoardGame } from './BoardGame'
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
+import { Toaster } from '@/components/ui/toaster'
 
 const queryClient = new QueryClient()
 
@@ -11,6 +12,7 @@ function App() {
           <BoardGame />
         </div>
       </div>
+      <Toaster />
     </QueryClientProvider>
   )
 }

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useScore } from '../../hooks/useScore'
+import { useScore } from '../../app/hooks/useScore'
 
 export function GlobalScore() {
   const { data, refetch, isFetching } = useScore()
@@ -30,8 +30,8 @@ export function GlobalScore() {
             <div className="text-base md:text-lg">Nome</div>
             <div className="text-base md:text-lg text-end">Pts</div>
           </div>
-          <div className="flex justify-end">
-            <hr className="w-full flex items-center opacity-10" />
+          <div>
+            <hr className="w-full" />
           </div>
 
           {data?.gamesScore.map((score, index) => (

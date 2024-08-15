@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useStore } from '../store'
+import { useStore } from '../store/useStore'
 
 const Timer = () => {
   const [time, setTime] = useState(0) // Inicializa o tempo em 0

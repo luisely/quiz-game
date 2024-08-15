@@ -1,6 +1,6 @@
 import { MouseEvent } from 'react'
-import { useStore } from '../store'
-import { quizQuestions } from '../store/questions'
+import { useStore } from '../../store/useStore'
+import { quizQuestions } from '../../store/questions'
 
 export function useHandleOptionSelected() {
   const setStatusTimer = useStore((state) => state.setStatusTimer)

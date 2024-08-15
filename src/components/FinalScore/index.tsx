@@ -1,7 +1,7 @@
 import { GlobalScore } from './GlobalScore'
 import InputPlayerName from './InputPlayerName'
 import { UserScore } from './UserScore'
-import { useStore } from '../../store'
+import { useStore } from '../../store/useStore'
 
 export function FinalScore() {
   const gameOver = useStore((state) => state.gameOver)
